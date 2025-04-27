@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Programador de Horarios</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <!-- Agregar CDN de Font Awesome -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    </head>
+    
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Barra de navegación -->
+    <nav class="bg-blue-600 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-white text-2xl font-semibold">Programador de Horarios</h1>
+            <div>
+                <a href="#gestionarHorarios" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Gestionar Horarios</a>
+                <a href="#verHorarios" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Ver Horarios</a>
+                <a href="#configuracion" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Configuración</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="gestionarHorarios" class="py-16 bg-white">
+        <div class="container mx-auto text-center">
+            <h1 class="text-5xl font-bold mb-4">Bienvenido al programador de horarios</h1>
+            <p class="text-lg mb-14">Selecciona los archivos CSV correspondientes para los docentes y horarios.</p>
+        
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="mb-8">
+                    <label for="csvDocentes" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i> Subir CSV de Docentes:
+                    </label>
+                    <input type="file" id="csvDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
+                                      
+                </div>
+        
+                <div class="mb-8">
+                    <label for="csvRestricciones" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-exclamation-triangle"></i> Subir CSV de Restricciones del docente:
+                    </label>
+                    <input type="file" id="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
+                </div>
+        
+                <div class="mb-8">
+                    <label for="csvMaterias" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-book"></i> Subir CSV de Materias:
+                    </label>
+                    <input type="file" id="csvMaterias" class="mb-4 px-4 py-2 border rounded-lg" />
+                </div>
+        
+                <div class="mb-8">
+                    <label for="csvMalla" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-link"></i> Subir CSV de Malla profesor - materia:
+                    </label>
+                    <input type="file" id="csvMalla" class="mb-4 px-4 py-2 border rounded-lg" />
+                </div>
+        
+                <div class="mb-8">
+                    <label for="csvSalones" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-chalkboard"></i> Subir CSV de Salones:
+                    </label>
+                    <input type="file" id="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
+                </div>                
+            </div>
+            <button id="generarHorarioBtn" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                <i class="fas fa-clock"></i> Generar Horario
+            </button>
+        </div>
+        
+        </div>
+    </section>
+
+</body>
+</html>
