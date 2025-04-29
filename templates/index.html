@@ -12,7 +12,7 @@
 <body class="bg-gray-100 text-gray-900">
 
     <!-- Barra de navegación -->
-    <nav class="bg-blue-600 p-4 shadow-md">
+    <nav class="bg-blue-800 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
             <h1 class="text-white text-2xl font-semibold">Programador de Horarios</h1>
             <div>
@@ -33,7 +33,7 @@
                     <label for="csvDocentes" class="block text-lg font-medium mb-2">
                         <i class="fas fa-chalkboard-teacher mr-2"></i> Subir CSV de Docentes:
                     </label>
-                    <input type="file" id="csvDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="csvDocentes" name="csvDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
                                       
                 </div>
         
@@ -41,37 +41,42 @@
                     <label for="csvRestricciones" class="block text-lg font-medium mb-2">
                         <i class="fas fa-exclamation-triangle"></i> Subir CSV de Restricciones del docente:
                     </label>
-                    <input type="file" id="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="csvRestricciones" name="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>
         
                 <div class="mb-8">
                     <label for="csvMaterias" class="block text-lg font-medium mb-2">
                         <i class="fas fa-book"></i> Subir CSV de Materias:
                     </label>
-                    <input type="file" id="csvMaterias" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="csvMaterias" name="csvMaterias" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>
         
                 <div class="mb-8">
                     <label for="csvMalla" class="block text-lg font-medium mb-2">
                         <i class="fas fa-link"></i> Subir CSV de Malla profesor - materia:
                     </label>
-                    <input type="file" id="csvMalla" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="csvMalla" name="csvMalla" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>
         
                 <div class="mb-8">
                     <label for="csvSalones" class="block text-lg font-medium mb-2">
                         <i class="fas fa-chalkboard"></i> Subir CSV de Salones:
                     </label>
-                    <input type="file" id="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="csvSalones" name="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>                
             </div>
-            <button id="generarHorarioBtn" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+            <button id="visualizarCsvBtn" class="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
+                <i class="fas fa-eye"></i> Visualizar datos cargados
+            </button>
+            <button id="generarHorarioBtn" class="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
                 <i class="fas fa-clock"></i> Generar Horario
             </button>
         </div>
         
         </div>
     </section>
-
+    <script src="../static/js/index.js"></script>
+    <!-- alertas bonitas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

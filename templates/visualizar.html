@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar CSV</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-blue-900 text-white p-6">
+        <h2 class="text-2xl font-bold mb-8">Datos</h2>
+        <ul class="space-y-7">
+            <li><a href="#" id="docentes-link" class="hover:text-blue-300">Docentes</a></li>
+            <li><a href="#" id="materias-link" class="hover:text-blue-300">Materias</a></li>
+            <li><a href="#" id="restricciones-link" class="hover:text-blue-300">Restricciones del docente</a></li>
+            <li><a href="#" id="malla-link" class="hover:text-blue-300">Malla docente - materias</a></li>
+            <li><a href="#" id="salones-link" class="hover:text-blue-300">Salones</a></li>
+        </ul>
+
+        <!-- Botón de regreso al index -->
+        <div class="mt-12">
+            <a href="/" class="block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Volver al inicio
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-10">
+        <div id="content-section"></div>
+        
+    </main> 
+    <script src="../static/js/visualizar/docentes.js"></script>
+    <script src="../static/js/visualizar/materias.js"></script>
+    <script src="../static/js/visualizar/restricciones.js"></script>
+    <script src="../static/js/visualizar/malla.js"></script>
+    <script src="../static/js/visualizar/salones.js"></script>
+
+    <!-- alertas bonitas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    
+</body>
+</html>
