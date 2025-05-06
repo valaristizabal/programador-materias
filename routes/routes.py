@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, jsonify
 from services import procesar_csv
+
 index_bp = Blueprint('index', __name__)
 
 @index_bp.route('/', methods=["GET"])
@@ -10,7 +11,6 @@ def index():
 def visualizar():
     return render_template("visualizar.html")
 
-
 @index_bp.route('/cargar-csv', methods=["POST"])
 def cargar_archivos():
     csv_docentes = request.files['csvDocentes']
@@ -19,20 +19,12 @@ def cargar_archivos():
     csv_mallas = request.files['csvMalla']
     csv_salones = request.files['csvSalones']
 
-
-    # luego de leer los csv como listas de diccionarios...
-    docentes_raw = procesar_csv.leer_csv(csv_docentes)
-    materias_raw = procesar_csv.leer_csv(csv_materias)
-    restricciones_raw = procesar_csv.leer_csv(csv_restricciones)
-    mallas_raw = procesar_csv.leer_csv(csv_mallas)
-    salones_raw = procesar_csv.leer_csv(csv_salones)
-
-    # mapeo a objetos
-    docentes = procesar_csv.mapear_docentes(docentes_raw)
-    materias = procesar_csv.mapear_materias(materias_raw)
-    restricciones = procesar_csv.mapear_restricciones(restricciones_raw)
-    mallas = procesar_csv.mapear_mallas(mallas_raw)
-    salones = procesar_csv.mapear_salones(salones_raw)
+    # leer los csv como listas de diccionarios
+    docentes = procesar_csv.leer_csv(csv_docentes)
+    materias = procesar_csv.leer_csv(csv_materias)
+    restricciones = procesar_csv.leer_csv(csv_restricciones)
+    mallas = procesar_csv.leer_csv(csv_mallas)
+    salones = procesar_csv.leer_csv(csv_salones)
 
     return jsonify({
         "docentes": docentes,
