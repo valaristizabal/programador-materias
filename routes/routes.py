@@ -58,4 +58,7 @@ def generar():
     salones = procesar_csv.mapear_salones(request.json.get('salones'))
 
     horario = generar_horarios(docentes, materias, restricciones, mallas, salones)
+
+    print(">>> Eventos generados:", horario)  # <-- Asegúrate que esto no sea una lista vacía
+
     return jsonify(horario)
