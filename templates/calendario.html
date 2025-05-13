@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario de Horarios</title>
+
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css" rel="stylesheet">
+
+  <style>
+    #calendar {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calendario de Horarios</h1>
+  <div id="calendar"></div>
+
+  <!-- Carga de la librería FullCalendar antes de usarla -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+
+  <!-- Tu script personalizado debe ir después -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const horarioGenerado = JSON.parse(localStorage.getItem("horarioGenerado"));
+
+      if (horarioGenerado) {
+        const calendarEl = document.getElementById('calendar');
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+          events: horarioGenerado,
+          eventColor: '#378006',
+          eventTextColor: '#ffffff',
+          locale: 'es',
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          }
+        });
+
+        calendar.render();
+      } else {
+        console.error("No se encontró el horario generado en el localStorage.");
+      }
+    });
+  </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const horario = JSON.parse(localStorage.getItem('horarioGenerado'));
+
+    if (!horario) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Sin datos',
+            text: 'No se encontró el horario generado.',
+        });
+        return;
+    }
+
+    console.log('Horario cargado:', horario);
+    // Aquí deberías recorrer y renderizar el horario en el DOM
+    // Ejemplo de acceso básico:
+    const contenedor = document.getElementById('contenedor-horario');
+    horario.forEach(item => {
+        const div = document.createElement('div');
+        div.textContent = `${item.materia} - ${item.docente} - ${item.salon} - ${item.hora}`;
+        contenedor.appendChild(div);
+    });
+});
+</script>
+
+</body>
+</html>
