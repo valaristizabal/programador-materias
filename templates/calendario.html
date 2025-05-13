@@ -26,7 +26,8 @@
   <!-- Tu script personalizado debe ir después -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const horarioGenerado = JSON.parse(localStorage.getItem("horarioGenerado"));
+      const horarioGenerado = JSON.parse(localStorage.getItem("horarioData"));
+
 
       if (horarioGenerado) {
         const calendarEl = document.getElementById('calendar');
@@ -52,7 +53,7 @@
   </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const horario = JSON.parse(localStorage.getItem('horarioGenerado'));
+    const horario = JSON.parse(localStorage.getItem('horarioData'));
 
     if (!horario) {
         Swal.fire({
