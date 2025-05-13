@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const visualizarBtn = document.getElementById('visualizarCsvBtn');
+    const generarHorarioBtn = document.getElementById('generarHorarioBtn');
 
     visualizarBtn.addEventListener('click', function () {
         const formData = new FormData();
@@ -45,6 +46,118 @@ document.addEventListener('DOMContentLoaded', function () {
                 text: error.message || 'Ocurrió un error desconocido.',
             });
             console.error('Error al cargar los archivos:', error);
+        });
+    });
+
+    generarHorarioBtn.addEventListener('click', function () {
+        const docentesData = JSON.parse(localStorage.getItem('docentesData'));
+        const materiasData = JSON.parse(localStorage.getItem('materiasData'));
+        const restriccionesData = JSON.parse(localStorage.getItem('restriccionesData'));
+        const mallaData = JSON.parse(localStorage.getItem('mallaData'));
+        const salonesData = JSON.parse(localStorage.getItem('salonesData'));
+
+        if (!docentesData || !materiasData || !restriccionesData || !mallaData || !salonesData) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos incompletos',
+                text: 'Debe cargar todos los CSV para generar el horario',
+            });
+            return;
+        }
+
+        const horarioData = {
+            docentes: docentesData,
+            materias: materiasData,
+            restricciones: restriccionesData,
+            mallas: mallaData,
+            salones: salonesData
+        };
+
+        fetch('/generar-horarios', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(horarioData)
+        })
+        .then(async response => {
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Respuesta de error HTML:', errorText);
+                throw new Error('Error del servidor al generar el horario');
+            }
+            return response.json();
+        })
+        .then(horario => {
+            console.log('Horario generado:', horario);
+            localStorage.setItem('horarioData', JSON.stringify(horario));
+            window.location.href = '/visualizar';
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al generar horario',
+                text: error.message || 'Ocurrió un error desconocido.',
+            });
+            console.error('Error al generar el horario:', error);
+        });
+        
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const generarHorarioBtn = document.getElementById('generarHorarioBtn');
+
+    generarHorarioBtn.addEventListener('click', function () {
+        const docentesData = JSON.parse(localStorage.getItem('docentesData'));
+        const materiasData = JSON.parse(localStorage.getItem('materiasData'));
+        const restriccionesData = JSON.parse(localStorage.getItem('restriccionesData'));
+        const mallaData = JSON.parse(localStorage.getItem('mallaData'));
+        const salonesData = JSON.parse(localStorage.getItem('salonesData'));
+
+        if (!docentesData || !materiasData || !restriccionesData || !mallaData || !salonesData) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos incompletos',
+                text: 'Debe cargar todos los CSV para generar el horario',
+            });
+            return;
+        }
+
+        const horarioData = {
+            docentes: docentesData,
+            materias: materiasData,
+            restricciones: restriccionesData,
+            mallas: mallaData,
+            salones: salonesData
+        };
+
+        fetch('/generar-horarios', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(horarioData)
+        })
+        .then(async response => {
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Respuesta de error HTML:', errorText);
+                throw new Error('Error del servidor al generar el horario');
+            }
+            return response.json();
+        })
+        .then(horario => {
+            console.log('Horario generado:', horario);
+            localStorage.setItem('horarioData', JSON.stringify(horario));
+            window.location.href = '/calendario';  // ⬅ Redirección automática al calendario
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al generar horario',
+                text: error.message || 'Ocurrió un error desconocido.',
+            });
+            console.error('Error al generar el horario:', error);
         });
     });
 });

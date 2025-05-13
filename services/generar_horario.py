@@ -1,66 +1,82 @@
 from collections import defaultdict
-from datetime import time
+from datetime import datetime, timedelta
 
-# Días y horas estándar (puedes modificar)
+# Días y horas estándar
 DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]
 HORAS = [f"{h}:00" for h in range(7, 19)]  # 7 AM a 6 PM
 
-def generar_horario(docentes, materias, restricciones, mallas, salones):
-    horario = defaultdict(list)  # clave: día, valor: lista de clases
+def hay_restriccion(cedula_docente, dia, hora, mapa_restricciones):
+    for r in mapa_restricciones[cedula_docente]:
+        if r.tipo == dia and r.hora_inicio <= hora <= r.hora_fin:
+            return True
+    return False
 
-    # Convertir restricciones en un mapa para acceso rápido
+def generar_horarios(docentes, materias, restricciones, mallas, salones):
+    eventos = []
+
+    # Mapa de restricciones por cédula docente
     mapa_restricciones = defaultdict(list)
     for r in restricciones:
         mapa_restricciones[r.cedula_profesor].append(r)
 
-    # Indexar mallas y salones para rápida búsqueda
+    # Mapa de mallas por código de materia
     mapa_mallas = defaultdict(list)
     for m in mallas:
-        mapa_mallas[m.codigo_carrera].append(m)
+        mapa_mallas[m.codigo_materia].append(m)
 
+    # Mapa de salones por tipo
     mapa_salones = {s.tipo: s for s in salones}
 
+    # Fecha base (lunes)
+    base_fecha = datetime(2025, 5, 5)
+
+    # Iteración por materias
     for materia in materias:
         horas_asignadas = 0
-        for dia in DIAS:
+        for i, dia in enumerate(DIAS):
             for hora in HORAS:
-                if horas_asignadas >= int(materia.horas_semanales):
+                # Si ya se asignaron todas las horas semanales, salir del bucle
+                if horas_asignadas >= materia.horas_semanales:
                     break
 
-                # Buscar docente elegible por malla y disponible en esta hora
+                # Filtrar docentes que no tienen restricciones para este día y hora
                 posibles_docentes = [
-                    m for m in mapa_mallas[materia.carrera]
+                    m for m in mapa_mallas[materia.codigo]
                     if not hay_restriccion(m.cedula_profesor, dia, hora, mapa_restricciones)
                 ]
 
                 if not posibles_docentes:
                     continue
 
-                docente_asignado = posibles_docentes[0]  # Puedes usar lógica más avanzada aquí
+                # Seleccionar el primer docente disponible
+                docente_asignado = posibles_docentes[0]
                 tipo_salon = docente_asignado.tipo_salon
                 salon_asignado = mapa_salones.get(tipo_salon)
 
                 if not salon_asignado:
                     continue
 
-                clase = {
-                    "materia": materia.nombre,
-                    "docente": docente_asignado.cedula_profesor,
-                    "salon": salon_asignado.id,
-                    "hora": hora,
-                    "dia": dia
+                # Calcular las fechas y horas de inicio y fin
+                hora_inicio = datetime.strptime(hora, "%H:%M")
+                fecha = base_fecha + timedelta(days=i)
+                start = datetime.combine(fecha.date(), hora_inicio.time())
+                end = start + timedelta(hours=1)
+
+                # Crear el evento
+                evento = {
+                    "title": materia.nombre,
+                    "start": start.isoformat(),
+                    "end": end.isoformat(),
+                    "description": f"Docente: {docente_asignado.nombre} ({docente_asignado.cedula})",
+                    "location": f"Salón {salon_asignado.id}",
+                    "color": "#378006"  # Color verde
                 }
 
-                horario[dia].append(clase)
+                eventos.append(evento)
                 horas_asignadas += 1
 
-                if horas_asignadas >= int(materia.horas_semanales):
+                # Si ya se asignaron todas las horas de la materia, salir del bucle
+                if horas_asignadas >= materia.horas_semanales:
                     break
 
-    return dict(horario)
-
-def hay_restriccion(cedula_docente, dia, hora, mapa_restricciones):
-    for r in mapa_restricciones[cedula_docente]:
-        if r.tipo_restriccion == dia and r.hora_inicio <= hora <= r.hora_fin:
-            return True
-    return False
+    return eventos
