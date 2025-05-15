@@ -4,55 +4,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
     visualizarBtn.addEventListener('click', function () {
         const formData = new FormData();
-        const csvDocentes = document.getElementById('csvDocentes').files[0];
-        const csvMaterias = document.getElementById('csvMaterias').files[0];
-        const csvRestricciones = document.getElementById('csvRestricciones').files[0];
-        const csvMalla = document.getElementById('csvMalla').files[0];
-        const csvSalones = document.getElementById('csvSalones').files[0];
+        const xlsxAsignacionDocentes = document.getElementById('xlsxAsignacionDocentes').files[0];
+        const xlsxRestricciones = document.getElementById('xlsxRestricciones').files[0];
+        const xlsxSalones = document.getElementById('xlsxSalones').files[0];
 
         // Verificar que todos los archivos han sido seleccionados
-        if (!csvDocentes || !csvMaterias || !csvRestricciones || !csvMalla || !csvSalones) {
+        if (!xlsxAsignacionDocentes || !xlsxRestricciones || !xlsxSalones) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Archivos faltantes',
-                text: 'Debe cargar todos los CSV para continuar',
+                text: 'Debe cargar los tres archivos XLSX para continuar',
             });
             return;
         }
 
-        formData.append('csvDocentes', csvDocentes);
-        formData.append('csvMaterias', csvMaterias);
-        formData.append('csvRestricciones', csvRestricciones);
-        formData.append('csvMalla', csvMalla);
-        formData.append('csvSalones', csvSalones);
+        formData.append('xlsxAsignacionDocentes', xlsxAsignacionDocentes);
+        formData.append('xlsxRestricciones', xlsxRestricciones);
+        formData.append('xlsxSalones', xlsxSalones);
 
-        fetch('/cargar-csv', {
+        fetch('/cargar-xlsx', {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
-            .then(data => {
-                // Guardar los datos en localStorage
-                localStorage.setItem('docentesData', JSON.stringify(data.docentes));
-                localStorage.setItem('materiasData', JSON.stringify(data.materias));
-                localStorage.setItem('restriccionesData', JSON.stringify(data.restricciones));
-                localStorage.setItem('mallaData', JSON.stringify(data.mallas));
-                localStorage.setItem('salonesData', JSON.stringify(data.salones));
+        .then(response => response.json())
+        .then(data => {
+            // Guardar los datos en localStorage
+            localStorage.setItem('docentesData', JSON.stringify(data.docentes));
+            localStorage.setItem('materiasData', JSON.stringify(data.materias));
+            localStorage.setItem('restriccionesData', JSON.stringify(data.restricciones));
+            localStorage.setItem('salonesData', JSON.stringify(data.salones));
 
-                // Verificar que los datos se guardaron correctamente
-                console.log('Datos guardados en localStorage:', localStorage.getItem('docentesData'));
-
-                // Redirigir a la página de visualizar
-                window.location.href = '/visualizar';
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error al enviar',
-                    text: error.message || 'Ocurrió un error desconocido.',
-                });
+            // Verificar que los datos se guardaron correctamente
+            console.log('Datos guardados en localStorage:', {
+                docentes: localStorage.getItem('docentesData'),
+                materias: localStorage.getItem('materiasData'),
+                restricciones: localStorage.getItem('restriccionesData'),
+                salones: localStorage.getItem('salonesData')
             });
+
+            // Redirigir a la página de visualizar
+            window.location.href = '/visualizar';
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al enviar',
+                text: error.message || 'Ocurrió un error desconocido.',
+            });
+            console.error('Error al cargar los archivos:', error);
+        });
     });
+});
 
     // Evento para generar el horario
     generarHorarioBtn.addEventListener('click', function () {
@@ -110,4 +112,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
     });
-});
+

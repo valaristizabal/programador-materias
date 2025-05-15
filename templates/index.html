@@ -26,43 +26,49 @@
     <section id="gestionarHorarios" class="py-16 bg-white">
         <div class="container mx-auto text-center">
             <h1 class="text-5xl font-bold mb-4">Bienvenido al programador de horarios</h1>
-            <p class="text-lg mb-14">Selecciona los archivos CSV correspondientes para los docentes y horarios.</p>
+            <p class="text-lg mb-14">Selecciona los archivos XLSX correspondientes para los docentes y horarios.</p>
         
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="mb-8">
                     <label for="csvDocentes" class="block text-lg font-medium mb-2">
+                        <i class="fas fa-chalkboard-teacher mr-2"></i> Subir XLSX de asignación docentes:
+                    </label>
+                    <input type="file" id="xlsxAsignacionDocentes" name="xlsxAsignacionDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
+                </div>
+
+                <!-- <div class="mb-8">
+                    <label for="csvDocentes" class="block text-lg font-medium mb-2">
                         <i class="fas fa-chalkboard-teacher mr-2"></i> Subir CSV de Docentes:
                     </label>
                     <input type="file" id="csvDocentes" name="csvDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
-                                      
-                </div>
+                </div> -->
         
                 <div class="mb-8">
                     <label for="csvRestricciones" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-exclamation-triangle"></i> Subir CSV de Restricciones del docente:
+                        <i class="fas fa-exclamation-triangle"></i> Subir XLSX de Restricciones del docente:
                     </label>
-                    <input type="file" id="csvRestricciones" name="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="xlsxRestricciones" name="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>
         
-                <div class="mb-8">
+                <!-- <div class="mb-8">
                     <label for="csvMaterias" class="block text-lg font-medium mb-2">
                         <i class="fas fa-book"></i> Subir CSV de Materias:
                     </label>
                     <input type="file" id="csvMaterias" name="csvMaterias" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div>
+                </div> -->
         
-                <div class="mb-8">
+                <!-- <div class="mb-8">
                     <label for="csvMalla" class="block text-lg font-medium mb-2">
                         <i class="fas fa-link"></i> Subir CSV de Malla profesor - materia:
                     </label>
                     <input type="file" id="csvMalla" name="csvMalla" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div>
+                </div> -->
         
                 <div class="mb-8">
                     <label for="csvSalones" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-chalkboard"></i> Subir CSV de Salones:
+                        <i class="fas fa-chalkboard"></i> Subir XLSX de Salones:
                     </label>
-                    <input type="file" id="csvSalones" name="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
+                    <input type="file" id="xlsxSalones" name="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
                 </div>                
             </div>
             <button id="visualizarCsvBtn" class="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
