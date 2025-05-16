@@ -1,91 +1,274 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Programador de Horarios</title>
-        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-        <!-- Agregar CDN de Font Awesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    </head>
-    
-<body class="bg-gray-100 text-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Programador Mágico de Horarios ✨</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .magic-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .magic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .magic-card.docentes {
+            border-left-color: #3b82f6;
+        }
+        
+        .magic-card.restricciones {
+            border-left-color: #f59e0b;
+        }
+        
+        .magic-card.salones {
+            border-left-color: #10b981;
+        }
+        
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            transition: all 0.3s;
+            background-color: #f9fafb;
+        }
+        
+        .upload-area:hover {
+            border-color: #3b82f6;
+            background-color: #f0f7ff;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            transition: all 0.3s;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
 
-    <!-- Barra de navegación -->
-    <nav class="bg-blue-800 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-white text-2xl font-semibold">Programador de Horarios</h1>
-            <div>
-                <a href="#gestionarHorarios" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Gestionar Horarios</a>
-                <a href="#verHorarios" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Ver Horarios</a>
-                <a href="#configuracion" class="text-white px-4 py-2 hover:bg-blue-500 rounded">Configuración</a>
+    <!-- Barra de navegación mágica -->
+    <nav class="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-magic text-white text-2xl"></i>
+                    <span class="text-white text-2xl font-bold">Generador de horarios</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#gestionarHorarios" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
+                        <i class="fas fa-cloud-upload-alt mr-2"></i> Cargar Datos
+                    </a>
+                    <a href="#verHorarios" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
+                        <i class="fas fa-calendar-alt mr-2"></i> Horarios
+                    </a>
+                    <a href="#configuracion" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
+                        <i class="fas fa-cogs mr-2"></i> Configuración
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <section id="gestionarHorarios" class="py-16 bg-white">
-        <div class="container mx-auto text-center">
-            <h1 class="text-5xl font-bold mb-4">Bienvenido al programador de horarios</h1>
-            <p class="text-lg mb-14">Selecciona los archivos XLSX correspondientes para los docentes y horarios.</p>
-        
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="mb-8">
-                    <label for="csvDocentes" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-chalkboard-teacher mr-2"></i> Subir XLSX de asignación docentes:
-                    </label>
-                    <input type="file" id="xlsxAsignacionDocentes" name="xlsxAsignacionDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div>
-
-                <!-- <div class="mb-8">
-                    <label for="csvDocentes" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-chalkboard-teacher mr-2"></i> Subir CSV de Docentes:
-                    </label>
-                    <input type="file" id="csvDocentes" name="csvDocentes" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div> -->
-        
-                <div class="mb-8">
-                    <label for="csvRestricciones" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-exclamation-triangle"></i> Subir XLSX de Restricciones del docente:
-                    </label>
-                    <input type="file" id="xlsxRestricciones" name="csvRestricciones" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div>
-        
-                <!-- <div class="mb-8">
-                    <label for="csvMaterias" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-book"></i> Subir CSV de Materias:
-                    </label>
-                    <input type="file" id="csvMaterias" name="csvMaterias" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div> -->
-        
-                <!-- <div class="mb-8">
-                    <label for="csvMalla" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-link"></i> Subir CSV de Malla profesor - materia:
-                    </label>
-                    <input type="file" id="csvMalla" name="csvMalla" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div> -->
-        
-                <div class="mb-8">
-                    <label for="csvSalones" class="block text-lg font-medium mb-2">
-                        <i class="fas fa-chalkboard"></i> Subir XLSX de Salones:
-                    </label>
-                    <input type="file" id="xlsxSalones" name="csvSalones" class="mb-4 px-4 py-2 border rounded-lg" />
-                </div>                
+    <!-- Contenido principal -->
+    <main class="py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Encabezado con magia -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl font-bold text-gray-800 mb-4">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Genera el horario de los docentes</span>
+                </h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Sube tus archivos y deja que la magia organice los horarios automáticamente
+                </p>
             </div>
-            <button id="visualizarCsvBtn" class="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-                <i class="fas fa-eye"></i> Visualizar datos cargados
-            </button>
-            <button id="generarHorarioBtn" class="bg-blue-800 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
-                <i class="fas fa-clock"></i> Generar Horario
-            </button>
+
+            <!-- Tarjetas de carga -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Tarjeta Docentes -->
+                <div class="magic-card docentes p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-chalkboard-teacher text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Docentes y Materias</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">Sube el archivo con la asignación de materias a cada docente.</p>
+                    <div class="upload-area p-8 text-center cursor-pointer" onclick="document.getElementById('xlsxAsignacionDocentes').click()">
+                        <input type="file" id="xlsxAsignacionDocentes" class="hidden" accept=".xlsx">
+                        <i class="fas fa-file-excel text-4xl text-blue-500 mb-3"></i>
+                        <p class="font-medium text-gray-700">Arrastra tu archivo aquí</p>
+                        <p class="text-sm text-gray-500 mt-1">o haz clic para seleccionar</p>
+                        <p id="docentesFileName" class="text-sm text-blue-600 font-medium mt-3 truncate"></p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Restricciones -->
+                <div class="magic-card restricciones p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-amber-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-exclamation-triangle text-amber-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Restricciones</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">Indica las horas y días no disponibles para cada docente.</p>
+                    <div class="upload-area p-8 text-center cursor-pointer" onclick="document.getElementById('xlsxRestricciones').click()">
+                        <input type="file" id="xlsxRestricciones" class="hidden" accept=".xlsx">
+                        <i class="fas fa-file-excel text-4xl text-amber-500 mb-3"></i>
+                        <p class="font-medium text-gray-700">Arrastra tu archivo aquí</p>
+                        <p class="text-sm text-gray-500 mt-1">o haz clic para seleccionar</p>
+                        <p id="restriccionesFileName" class="text-sm text-amber-600 font-medium mt-3 truncate"></p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Salones -->
+                <div class="magic-card salones p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-green-100 p-3 rounded-full mr-4">
+                            <i class="fas fa-door-open text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Salones</h3>
+                    </div>
+                    <p class="text-gray-600 mb-6">Carga la información de aulas y laboratorios disponibles.</p>
+                    <div class="upload-area p-8 text-center cursor-pointer" onclick="document.getElementById('xlsxSalones').click()">
+                        <input type="file" id="xlsxSalones" class="hidden" accept=".xlsx">
+                        <i class="fas fa-file-excel text-4xl text-green-500 mb-3"></i>
+                        <p class="font-medium text-gray-700">Arrastra tu archivo aquí</p>
+                        <p class="text-sm text-gray-500 mt-1">o haz clic para seleccionar</p>
+                        <p id="salonesFileName" class="text-sm text-green-600 font-medium mt-3 truncate"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <button id="visualizarCsvBtn" class="btn-primary px-8 py-3 rounded-full text-white font-semibold flex items-center pulse">
+                    <i class="fas fa-eye mr-2"></i> Ver Datos Cargados
+                </button>
+                <button id="generarHorarioBtn" class="btn-success px-8 py-3 rounded-full text-white font-semibold flex items-center">
+                    <i class="fas fa-wand-magic-sparkles mr-2"></i> Generar Horario Mágico
+                </button>
+            </div>
         </div>
-        
+    </main>
+
+    <!-- Pie de página encantado -->
+    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center">
+                        <i class="fas fa-hat-wizard text-2xl mr-2"></i>
+                        <span class="text-xl font-bold">MagicScheduler</span>
+                    </div>
+                    <p class="text-blue-100 mt-2">La solución mágica para tus horarios académicos</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-blue-100 text-sm">
+                <p>© 2023 MagicScheduler. Todos los derechos reservados.</p>
+            </div>
         </div>
-    </section>
+    </footer>
+
+    <!-- Scripts mágicos -->
     <script src="../static/js/index.js"></script>
-    <!-- alertas bonitas -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- FullCalendar CSS -->
+    <script>
+        // Mostrar nombres de archivos seleccionados
+        document.getElementById('xlsxAsignacionDocentes').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No seleccionado';
+            document.getElementById('docentesFileName').textContent = fileName;
+        });
 
+        document.getElementById('xlsxRestricciones').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No seleccionado';
+            document.getElementById('restriccionesFileName').textContent = fileName;
+        });
 
+        document.getElementById('xlsxSalones').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No seleccionado';
+            document.getElementById('salonesFileName').textContent = fileName;
+        });
+
+        // Efecto de carga mágica
+        document.getElementById('generarHorarioBtn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Creando magia...';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-wand-magic-sparkles mr-2"></i> ¡Magia completada!';
+            }, 2000);
+        });
+    </script>
 </body>
 </html>

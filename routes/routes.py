@@ -20,28 +20,39 @@ def calendario():
 
 @index_bp.route('/cargar-xlsx', methods=["POST"])
 def cargar_archivos():
-    # Recuperar los archivos subidos
-    xlsx_asignacion_docentes = request.files['xlsxAsignacionDocentes']
-    xlsx_restricciones = request.files['xlsxRestricciones']
-    xlsx_salones = request.files['xlsxSalones']
+    print("Entré al endpoint cargar-xlsx")
+    try:
+        # Recuperar los archivos subidos
+        xlsx_asignacion_docentes = request.files['xlsxAsignacionDocentes']
+        xlsx_restricciones = request.files['xlsxRestricciones']
+        xlsx_salones = request.files['xlsxSalones']
 
-    # Procesar los archivos XLSX
-    asignacion_raw = pd.read_excel(xlsx_asignacion_docentes, sheet_name=0)
-    restricciones_raw = pd.read_excel(xlsx_restricciones, sheet_name=0)
-    salones_raw = pd.read_excel(xlsx_salones, sheet_name=0)
+        # Procesar los archivos XLSX
+        asignacion_raw = pd.read_excel(xlsx_asignacion_docentes, sheet_name=0)
+        restricciones_raw = pd.read_excel(xlsx_restricciones, sheet_name=0)
+        salones_raw = pd.read_excel(xlsx_salones, sheet_name=0)
 
-    # Mapeo de datos
-    docentes, materias = procesar_csv.mapear_asignacion(asignacion_raw)
-    restricciones = procesar_csv.mapear_restricciones(restricciones_raw)
-    salones = procesar_csv.mapear_salones(salones_raw)
+        # Mapeo de datos
+        docentes, materias = procesar_csv.mapear_asignacion(asignacion_raw)
+        restricciones = procesar_csv.mapear_restricciones(restricciones_raw)
+        salones = procesar_csv.mapear_salones(salones_raw)
 
-    # Responder con los datos en formato JSON
-    return jsonify({
-        "docentes": [docente.to_dict() for docente in docentes],
-        "materias": [materia.to_dict() for materia in materias],
-        "restricciones": [restriccion.to_dict() for restriccion in restricciones],
-        "salones": [salon.to_dict() for salon in salones]
-    })
+        # Responder con los datos en formato JSON
+        response_data = {
+            "docentes": [docente.to_dict() for docente in docentes],
+            "materias": [materia.to_dict() for materia in materias],
+            "restricciones": [restriccion.to_dict() for restriccion in restricciones],
+            "salones": [salon.to_dict() for salon in salones]
+        }
+
+        # 🔍 Verificar la respuesta que se envía
+        print("JSON Response:", response_data)
+
+        return jsonify(response_data)
+
+    except Exception as e:
+        print("Error en la carga:", str(e))
+        return jsonify({"error": str(e)}), 500
 
 
 @index_bp.route('/generar-horarios', methods=["POST"])
