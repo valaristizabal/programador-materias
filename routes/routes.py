@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, jsonify
 from services import procesar_csv
-from services.generar_horario import generar_horarios
+from services.generar_horario import GeneradorHorarios
+
 import pandas as pd
 
 index_bp = Blueprint('index', __name__)
@@ -54,17 +55,21 @@ def cargar_archivos():
         print("Error en la carga:", str(e))
         return jsonify({"error": str(e)}), 500
 
+@index_bp.route('/generar_horario', methods=['POST'])
+def generar_horario():
+    try:
+        data = request.json
+        generador = GeneradorHorarios()
+        generador.cargar_datos(
+            data['docentes'],
+            data['materias'],
+            data['restricciones'],
+            data['salones']
+        )
+        horario = generador.asignar_horarios()
+        return jsonify({'success': True, 'horario': horario})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
 
-@index_bp.route('/generar-horarios', methods=["POST"])
-def generar():
-    docentes = procesar_csv.mapear_docentes(request.json.get('docentes'))
-    materias = procesar_csv.mapear_materias(request.json.get('materias'))
-    restricciones = procesar_csv.mapear_restricciones(request.json.get('restricciones'))
-    mallas = procesar_csv.mapear_mallas(request.json.get('mallas'))
-    salones = procesar_csv.mapear_salones(request.json.get('salones'))
-
-    horario = generar_horarios(docentes, materias, restricciones, mallas, salones)
-
-    print(">>> Eventos generados:", horario)  # <-- Asegúrate que esto no sea una lista vacía
-
-    return jsonify(horario)
+if __name__ == '__main__':
+    index_bp.run(debug=True)

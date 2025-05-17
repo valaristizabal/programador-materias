@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Programador Mágico de Horarios ✨</title>
+    <title>Programador de horarios</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -111,17 +111,6 @@
                     <i class="fas fa-magic text-white text-2xl"></i>
                     <span class="text-white text-2xl font-bold">Generador de horarios</span>
                 </div>
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#gestionarHorarios" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
-                        <i class="fas fa-cloud-upload-alt mr-2"></i> Cargar Datos
-                    </a>
-                    <a href="#verHorarios" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
-                        <i class="fas fa-calendar-alt mr-2"></i> Horarios
-                    </a>
-                    <a href="#configuracion" class="nav-link text-white px-1 py-2 text-lg font-medium flex items-center">
-                        <i class="fas fa-cogs mr-2"></i> Configuración
-                    </a>
-                </div>
                 <div class="md:hidden">
                     <button class="text-white focus:outline-none">
                         <i class="fas fa-bars text-2xl"></i>
@@ -206,41 +195,9 @@
                 <button id="visualizarCsvBtn" class="btn-primary px-8 py-3 rounded-full text-white font-semibold flex items-center pulse">
                     <i class="fas fa-eye mr-2"></i> Ver Datos Cargados
                 </button>
-                <button id="generarHorarioBtn" class="btn-success px-8 py-3 rounded-full text-white font-semibold flex items-center">
-                    <i class="fas fa-wand-magic-sparkles mr-2"></i> Generar Horario Mágico
-                </button>
             </div>
         </div>
     </main>
-
-    <!-- Pie de página encantado -->
-    <footer class="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <div class="flex items-center">
-                        <i class="fas fa-hat-wizard text-2xl mr-2"></i>
-                        <span class="text-xl font-bold">MagicScheduler</span>
-                    </div>
-                    <p class="text-blue-100 mt-2">La solución mágica para tus horarios académicos</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
-                        <i class="fab fa-github text-xl"></i>
-                    </a>
-                    <a href="#" class="text-white hover:text-blue-200 transition-colors">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="mt-8 text-center text-blue-100 text-sm">
-                <p>© 2023 MagicScheduler. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
 
     <!-- Scripts mágicos -->
     <script src="../static/js/index.js"></script>

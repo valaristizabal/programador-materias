@@ -3,43 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizar CSV</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Visualizador de Datos Académicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .sidebar-item {
+            position: relative;
+            padding: 12px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-item.active {
+            background-color: #1e40af;
+        }
+        
+        .sidebar-item.active:after {
+            content: '';
+            position: absolute;
+            right: -16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-right: 8px solid white;
+        }
+        
+        .data-card {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .data-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .table-header {
+            background-color: #f8fafc;
+        }
+        
+        .table-row:hover {
+            background-color: #f8fafc;
+        }
+    </style>
 </head>
-<body class="flex min-h-screen">
+<body class="flex min-h-screen bg-gray-50">
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-blue-900 text-white p-6">
-        <h2 class="text-2xl font-bold mb-8">Datos</h2>
-        <ul class="space-y-7">
-            <li><a href="#" id="docentes-link" class="hover:text-blue-300">Docentes</a></li>
-            <li><a href="#" id="materias-link" class="hover:text-blue-300">Materias</a></li>
-            <li><a href="#" id="restricciones-link" class="hover:text-blue-300">Restricciones del docente</a></li>
-            <li><a href="#" id="salones-link" class="hover:text-blue-300">Salones</a></li>
-        </ul>
-
-        <!-- Botón de regreso al index -->
-        <div class="mt-12">
-            <a href="/" class="block text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Volver al inicio
-            </a>
+    <!-- Sidebar mejorado -->
+    <aside class="w-72 bg-gradient-to-b from-blue-800 to-blue-900 text-white p-6 flex flex-col">
+        <div class="flex items-center mb-10">
+            <i class="fas fa-university text-2xl mr-3 text-blue-300"></i>
+            <h2 class="text-2xl font-bold">Gestión Académica</h2>
         </div>
+        
+        <nav class="flex-1">
+            <ul class="space-y-2">
+                <li>
+                    <a href="#" id="docentes-link" class="sidebar-item flex items-center">
+                        <i class="fas fa-chalkboard-teacher mr-3 text-blue-200"></i>
+                        <span>Docentes</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="materias-link" class="sidebar-item flex items-center">
+                        <i class="fas fa-book mr-3 text-blue-200"></i>
+                        <span>Materias</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="restricciones-link" class="sidebar-item flex items-center">
+                        <i class="fas fa-exclamation-circle mr-3 text-blue-200"></i>
+                        <span>Restricciones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="salones-link" class="sidebar-item flex items-center">
+                        <i class="fas fa-door-open mr-3 text-blue-200"></i>
+                        <span>Salones</span>
+                    </a>
+                </li>
+                <li>
+                    <button onclick="generarYMostrarHorario()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg">
+                    <i class="fas fa-magic mr-2"></i> Generar Horario Automático
+                    </button>
+                </li>
+                        <!-- Botón de regreso -->
+                <div class="mt-auto">
+                    <a href="/" class="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium py-3 px-6 rounded-lg shadow transition-all duration-300">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Volver al inicio
+                    </a>
+                </div>
+            </ul>
+        </nav>
     </aside>
 
-    <!-- Main content -->
-    <main class="flex-1 p-10">
-        <div id="content-section"></div>
-        
-    </main> 
+    <!-- Contenido principal mejorado -->
+    <main class="flex-1 p-8">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header dinámico -->
+            <div id="content-header" class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Visualización de Datos</h1>
+                <p class="text-gray-600 mt-2">Selecciona una categoría en el menú lateral para comenzar</p>
+            </div>
+            
+            <!-- Contenedor de contenido dinámico -->
+            <div id="content-section" class="data-card bg-white p-6">
+                <div class="flex items-center justify-center h-64 text-gray-400">
+                    <div class="text-center">
+                        <i class="fas fa-hand-pointer text-5xl mb-4"></i>
+                        <p class="text-xl">No hay datos seleccionados</p>
+                        <p class="text-sm mt-2">Selecciona una opción del menú lateral para visualizar los datos</p>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </main>
+
+    <!-- Scripts -->
     <script src="../static/js/visualizar/docentes.js"></script>
     <script src="../static/js/visualizar/materias.js"></script>
     <script src="../static/js/visualizar/restricciones.js"></script>
-    <script src="../static/js/visualizar/malla.js"></script>
     <script src="../static/js/visualizar/salones.js"></script>
-
-    <!-- alertas bonitas -->
+    <script src="/static/js/generarHorario.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     
 </body>
 </html>
